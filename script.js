@@ -1324,8 +1324,6 @@ window.addEventListener('DOMContentLoaded', () => {
 	const themeToggle = document.getElementById('themeToggle');
 	if (!themeToggle) return;
 
-	const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-
 	function refreshAllCharts() {
 		// Refresh charts with new theme colors
 		Object.keys(chartData).forEach(calcId => {
@@ -1340,7 +1338,6 @@ window.addEventListener('DOMContentLoaded', () => {
 				savings: renderSavingsChart,
 				roi: renderRoiChart
 			}[calcId];
-			
 			if (renderFn && currentChartView[calcId]) {
 				try {
 					if (calcId === 'compound') {
@@ -1364,7 +1361,6 @@ window.addEventListener('DOMContentLoaded', () => {
 			themeToggle.textContent = '🌙 Dark Mode';
 		}
 		localStorage.setItem('theme', mode);
-		
 		// Refresh charts after theme change
 		setTimeout(refreshAllCharts, 100);
 	}
@@ -1378,6 +1374,7 @@ window.addEventListener('DOMContentLoaded', () => {
 	if (savedTheme) {
 		setTheme(savedTheme);
 	} else {
-		setTheme(prefersDark ? 'dark' : 'light');
+		// Default to light mode if no preference is set
+		setTheme('light');
 	}
 });
